@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoElite | 3D Showroom</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo"><i class="fas fa-car"></i> CRPTQ</a>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#cars">Cars</a></li>
+                    <li><a href="index.html#fuels">Fuels</a></li>
+                    <li><a href="showroom.html" class="active">Showroom</a></li>
+                    <li><a href="index.html#services">Services</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Showroom Page -->
+    <section class="showroom-page">
+        <div class="container">
+            <div class="showroom-header">
+                <h1>3D Interactive Showroom</h1>
+                <p>Explore our premium vehicles and performance fuels in stunning 3D detail</p>
+                
+                <div class="category-selector">
+                    <button class="category-btn active" data-category="cars">Cars</button>
+                    <button class="category-btn" data-category="fuels">Performance Fuels</button>
+                </div>
+            </div>
+
+            <div class="showroom-content">
+                <div class="model-viewer-container">
+                    <div id="model-container">
+                        <div class="loading-overlay" id="loading-overlay">Loading 3D Model...</div>
+                        <div class="instructions" id="instructions">
+                            <span id="desktop-instructions" style="display: none;">Drag to rotate • Scroll to zoom</span>
+                            <span id="mobile-instructions" style="display: none;">Touch and drag to rotate • Pinch to zoom</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-details">
+                    <h2 class="product-title" id="product-title">Volkswagen Golf GTI</h2>
+                    <div class="product-price" id="product-price">$32,500</div>
+                    
+                    <p class="product-description" id="product-description">
+                        The Volkswagen Golf GTI combines practicality with thrilling performance. 
+                        With its turbocharged engine and agile handling, it delivers an exhilarating 
+                        driving experience while maintaining everyday usability.
+                    </p>
+                    
+                    <div class="specs-list">
+                        <h3>Specifications</h3>
+                        <div class="specs-content" id="specs-content">
+                            <div class="spec-item">
+                                <span class="spec-name">Engine</span>
+                                <span class="spec-value">2.0L Turbo I4</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-name">Horsepower</span>
+                                <span class="spec-value">241 HP</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-name">Torque</span>
+                                <span class="spec-value">273 lb-ft</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-name">Transmission</span>
+                                <span class="spec-value">6-Speed Manual</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-name">0-60 mph</span>
+                                <span class="spec-value">5.9 seconds</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="color-selector" id="color-selector">
+                        <h3>Available Colors</h3>
+                        <div class="color-options">
+                            <div class="color-option active" style="background-color: #c1121f;" data-color="#c1121f"></div>
+                            <div class="color-option" style="background-color: #1d3557;" data-color="#1d3557"></div>
+                            <div class="color-option" style="background-color: #f1faee;" data-color="#f1faee"></div>
+                            <div class="color-option" style="background-color: #000814;" data-color="#000814"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn">Schedule Test Drive</button>
+                        <button class="btn btn-outline">Request Quote</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation-controls">
+                <button class="nav-btn" id="prev-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="model-counter">
+                    <span id="current-model">1</span> of <span id="total-models">3</span>
+                </div>
+                <button class="nav-btn" id="next-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+    <script src="scripts/menu-toggles.js"></script>
+    <script src="scripts/model-viewer.js"></script>
+</body>
+</html>
