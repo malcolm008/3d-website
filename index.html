@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoElite | Premium Cars & Performance Fuels</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo"><i class="fas fa-car"></i> CRPTQ</a>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#cars">Cars</a></li>
+                    <li><a href="#fuels">Fuels</a></li>
+                    <li><a href="#showroom">Showroom</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1>Drive Excellence with Premium Cars & Performance Fuels</h1>
+            <p>Discover our exclusive collection of luxury vehicles and high-performance additive fuels designed to maximize your driving experience.</p>
+            <a href="#cars" class="btn">Explore Cars</a>
+            <a href="#fuels" class="btn btn-secondary">View Fuels</a>
+        </div>
+    </section>
+
+    <!-- Featured Cars -->
+    <section id="cars">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Vehicles</h2>
+                <p>Explore our handpicked selection of premium automobiles</p>
+            </div>
+            <div class="cars-grid">
+                <div class="car-card">
+                    <div class="car-img" style="background-image: url('https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                    <div class="car-info">
+                        <h3>Volkswagen Golf GTI</h3>
+                        <p>Experience the perfect blend of performance and practicality with this iconic hot hatch.</p>
+                        <div class="car-price">$32,500</div>
+                        <a href="#" class="btn">View Details</a>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <div class="car-img" style="background-image: url('https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                    <div class="car-info">
+                        <h3>Range Rover Velar</h3>
+                        <p>Luxury meets capability in this sophisticated SUV with unparalleled off-road performance.</p>
+                        <div class="car-price">$68,900</div>
+                        <a href="#" class="btn">View Details</a>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <div class="car-img" style="background-image: url('https://images.unsplash.com/photo-1583121274602-3e2820c69888?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                    <div class="car-info">
+                        <h3>Porsche 911 Turbo</h3>
+                        <p>The ultimate sports car with breathtaking acceleration and precision handling.</p>
+                        <div class="car-price">$169,000</div>
+                        <a href="#" class="btn">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Fuels -->
+    <section id="fuels" style="background-color: var(--card-bg);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Performance Fuels</h2>
+                <p>Maximize your vehicle's potential with our premium additive fuels</p>
+            </div>
+            <div class="fuels-grid">
+                <div class="fuel-card">
+                    <div class="fuel-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3>Octane Boost</h3>
+                    <p>Increase engine power and prevent knocking with our high-octane fuel additive.</p>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+                <div class="fuel-card">
+                    <div class="fuel-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>Performance Plus</h3>
+                    <p>Advanced formula for enhanced acceleration and smoother engine operation.</p>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+                <div class="fuel-card">
+                    <div class="fuel-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Eco Formula</h3>
+                    <p>Reduce emissions and improve fuel economy without sacrificing performance.</p>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D Showroom -->
+    <section id="showroom">
+        <div class="container">
+            <div class="section-title">
+                <h2>3D Showroom</h2>
+                <p>Explore our vehicles and products in immersive 3D</p>
+            </div>
+            <div class="showroom-container">
+                <div class="model-selector">
+                    <button class="model-btn active" data-model="volkswagen">Volkswagen</button>
+                    <button class="model-btn" data-model="rangerover">Range Rover</button>
+                    <button class="model-btn" data-model="fuel">Performance Fuel</button>
+                </div>
+                <div class="model-viewer">
+                    <div id="model-container"></div>
+                    <div class="model-info">
+                        <h3 id="model-title">Volkswagen Golf GTI</h3>
+                        <p id="model-description">A compact car that delivers exceptional performance and driving dynamics.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Services</h2>
+                <p>Comprehensive automotive solutions for every need</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-car-side"></i>
+                    </div>
+                    <h3>Vehicle Sales</h3>
+                    <p>Find your perfect vehicle from our curated selection of premium automobiles.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-oil-can"></i>
+                    </div>
+                    <h3>Fuel Solutions</h3>
+                    <p>Enhance your vehicle's performance with our specialized additive fuels.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Maintenance</h3>
+                    <p>Keep your vehicle in peak condition with our expert maintenance services.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Warranty</h3>
+                    <p>Comprehensive warranty packages for peace of mind on the road.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" style="background-color: var(--card-bg);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p>Get in touch with our team of automotive experts</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Visit Our Showroom</h3>
+                    <div class="contact-detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>123 Automotive Avenue, Motor City, MC 12345</p>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-phone"></i>
+                        <p>+1 (555) 123-4567</p>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-envelope"></i>
+                        <p>info@autoelite.com</p>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-clock"></i>
+                        <p>Mon - Sat: 9:00 AM - 7:00 PM</p>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <input type="text" placeholder="Subject" required>
+                        <textarea rows="5" placeholder="Your Message" required></textarea>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>AutoElite</h3>
+                    <p>Your premier destination for luxury vehicles and high-performance additive fuels.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#cars">Cars</a></li>
+                        <li><a href="#fuels">Fuels</a></li>
+                        <li><a href="#showroom">Showroom</a></li>
+                        <li><a href="#services">Services</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Vehicle Sales</a></li>
+                        <li><a href="#">Performance Fuels</a></li>
+                        <li><a href="#">Maintenance</a></li>
+                        <li><a href="#">Financing</a></li>
+                        <li><a href="#">Test Drives</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to our newsletter for the latest updates and offers.</p>
+                    <form>
+                        <input type="email" placeholder="Your Email" required>
+                        <button type="submit" class="btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 AutoElite. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+
+        // Check for saved theme preference or default to light
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navMenu = document.querySelector('.nav-menu');
+
+        mobileMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Model Selector
+        const modelButtons = document.querySelectorAll('.model-btn');
+        const modelTitle = document.getElementById('model-title');
+        const modelDescription = document.getElementById('model-description');
+
+        // Model information
+        const modelInfo = {
+            volkswagen: {
+                title: "Volkswagen Golf GTI",
+                description: "A compact car that delivers exceptional performance and driving dynamics."
+            },
+            rangerover: {
+                title: "Range Rover Velar",
+                description: "Luxury meets capability in this sophisticated SUV with unparalleled off-road performance."
+            },
+            fuel: {
+                title: "Performance Fuel Additive",
+                description: "Our premium fuel additive enhances engine performance and fuel efficiency."
+            }
+        };
+
+        // Three.js 3D Model Viewer - Updated with better camera and interaction
+        let scene, camera, renderer, currentModel, controls;
+        const modelPaths = {
+            volkswagen: 'volkswagen.glb',
+            rangerover: 'rangerover.glb',
+            fuel: 'fuel.glb'
+        };
+
+        function initThreeJS() {
+            // Create scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf0f0f0);
+            
+            // Create camera with better positioning
+            camera = new THREE.PerspectiveCamera(
+                45, 
+                document.getElementById('model-container').offsetWidth / 
+                document.getElementById('model-container').offsetHeight, 
+                0.1, 
+                1000
+            );
+            
+            // Create renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(
+                document.getElementById('model-container').offsetWidth, 
+                document.getElementById('model-container').offsetHeight
+            );
+            renderer.shadowMap.enabled = true;
+            document.getElementById('model-container').appendChild(renderer.domElement);
+            
+            // Add better lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(5, 10, 7);
+            directionalLight.castShadow = true;
+            scene.add(directionalLight);
+            
+            // Add a subtle point light for better model definition
+            const pointLight = new THREE.PointLight(0xffffff, 0.5);
+            pointLight.position.set(-5, 5, 5);
+            scene.add(pointLight);
+            
+            // Add orbit controls for interaction
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.rotateSpeed = 0.5;
+            controls.enableZoom = true;
+            controls.enablePan = false;
+            
+            // Load initial model
+            loadModel('volkswagen');
+            
+            // Animation loop - no automatic rotation
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update(); // Only update controls, no model rotation
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = document.getElementById('model-container').offsetWidth / 
+                                document.getElementById('model-container').offsetHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(
+                    document.getElementById('model-container').offsetWidth, 
+                    document.getElementById('model-container').offsetHeight
+                );
+            });
+        }
+
+        function loadModel(modelName) {
+            // Remove current model if exists
+            if (currentModel) {
+                scene.remove(currentModel);
+            }
+            
+            // Reset controls
+            if (controls) {
+                controls.reset();
+            }
+            
+            // Show loading message
+            const modelContainer = document.getElementById('model-container');
+            modelContainer.innerHTML = '<div style="display: flex; justify-content: center; align-items: center; height: 100%; color: #666;">Loading 3D model...</div>';
+            
+            // Create new renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(modelContainer.offsetWidth, modelContainer.offsetHeight);
+            renderer.shadowMap.enabled = true;
+            modelContainer.innerHTML = '';
+            modelContainer.appendChild(renderer.domElement);
+            
+            // Update controls with new renderer DOM element
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.rotateSpeed = 0.5;
+            controls.enableZoom = true;
+            controls.enablePan = false;
+            
+            // Load the model
+            const loader = new THREE.GLTFLoader();
+            loader.load(
+                modelPaths[modelName],
+                function(gltf) {
+                    currentModel = gltf.scene;
+                    scene.add(currentModel);
+                    
+                    // Set initial rotation: x=45 degrees, y=0, z=0
+                    currentModel.rotation.x = Math.PI * 2; // 45 degrees in radians
+                    currentModel.rotation.y = (Math.PI * 2)-(Math.PI / 4);
+                    currentModel.rotation.z = 0;
+                    
+                    // Calculate bounding box to position camera correctly
+                    const box = new THREE.Box3().setFromObject(currentModel);
+                    const center = box.getCenter(new THREE.Vector3());
+                    const size = box.getSize(new THREE.Vector3());
+                    
+                    // Adjust model scale and position based on model type
+                    let scale, yPosition;
+                    if (modelName === 'fuel') {
+                        scale = 1.8;
+                        yPosition = -1;
+                    } else {
+                        scale = 1.8;
+                        yPosition = -1;
+                    }
+                    
+                    currentModel.scale.set(scale, scale, scale);
+                    currentModel.position.y = yPosition;
+                    
+                    // Position camera based on model size for better view
+                    const maxDim = Math.max(size.x, size.y, size.z);
+                    const fov = camera.fov * (Math.PI / 180);
+                    let cameraZ = Math.abs(maxDim / Math.sin(fov / 2)) * 0.8;
+                    
+                    // Adjust for different models
+                    if (modelName === 'fuel') {
+                        cameraZ *= 0.7; // Closer for fuel model
+                    } else if (modelName === 'volkswagen') {
+                        cameraZ *= 1.1; // Slightly further for Volkswagen
+                    }
+                    
+                    camera.position.z = cameraZ;
+                    camera.lookAt(center);
+                    
+                    // Set controls target to center of model
+                    controls.target.set(center.x, center.y + yPosition, center.z);
+                    controls.update();
+                    
+                    // Add instructions for desktop and mobile
+                    addInteractionInstructions();
+                },
+                function(xhr) {
+                    // Loading progress (optional)
+                    console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                },
+                function(error) {
+                    console.error('Error loading model:', error);
+                    modelContainer.innerHTML = '<div style="display: flex; justify-content: center; align-items: center; height: 100%; color: #e63946;">Error loading 3D model. Please check console for details.</div>';
+                }
+            );
+        }
+
+        // Add interaction instructions
+        function addInteractionInstructions() {
+            // Remove any existing instructions
+            const existingInstructions = document.querySelector('.model-instructions');
+            if (existingInstructions) {
+                existingInstructions.remove();
+            }
+            
+            // Create instructions element
+            const instructions = document.createElement('div');
+            instructions.className = 'model-instructions';
+            instructions.innerHTML = `
+                <div style="position: absolute; bottom: 10px; left: 0; right: 0; text-align: center; color: #666; font-size: 14px; background: rgba(255,255,255,0.7); padding: 5px; border-radius: 4px; margin: 0 10px;">
+                    <span id="desktop-instructions" style="display: none;">Drag to rotate • Scroll to zoom</span>
+                    <span id="mobile-instructions" style="display: none;">Touch and drag to rotate • Pinch to zoom</span>
+                </div>
+            `;
+            
+            document.getElementById('model-container').appendChild(instructions);
+            
+            // Show appropriate instructions based on device
+            if ('ontouchstart' in window || navigator.maxTouchPoints) {
+                document.getElementById('mobile-instructions').style.display = 'inline';
+            } else {
+                document.getElementById('desktop-instructions').style.display = 'inline';
+            }
+            
+            // Hide instructions after 5 seconds
+            setTimeout(() => {
+                instructions.style.opacity = '0.5';
+            }, 5000);
+        }
+
+        // Update model selector to load actual models
+        modelButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                modelButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Update model information
+                const model = button.getAttribute('data-model');
+                modelTitle.textContent = modelInfo[model].title;
+                modelDescription.textContent = modelInfo[model].description;
+                
+                // Load the corresponding 3D model
+                loadModel(model);
+            });
+        });
+
+        // Initialize Three.js when the page loads
+        window.addEventListener('load', initThreeJS);
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
