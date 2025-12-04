@@ -1,5 +1,6 @@
 :root {
     --primary-color: #e63946;
+    --hover: #c1121f;
     --secondary-color: #457b9d;
     --accent-color: #a8dadc;
     --text-color: #1d3557;
@@ -14,12 +15,14 @@
 .dark-mode {
     --primary-color: #dfab3b;
     --secondary-color: #a8dadc;
+    --hover: #644119;
     --accent-color: #457b9d;
     --text-color: #f1faee;
     --bg-color: rgb(0, 0, 0);
     --card-bg: #221d18;
+    --bg: #0b0908;
     --header-bg: rgba(15, 15, 16, 0.9);
-    --footer-bg: #0d1b2a;
+    --footer-bg: rgb(0, 0, 0);
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
@@ -71,7 +74,9 @@ header {
     align-items: center;
 }
 
-.logo i {
+.logo img {
+    width: 150px;
+    height: auto;
     margin-right: 10px;
 }
 
@@ -159,7 +164,7 @@ nav ul li a:hover {
 }
 
 .btn:hover {
-    background-color: #c1121f;
+    background-color: var(--hover);
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
