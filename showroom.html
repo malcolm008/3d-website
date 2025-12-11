@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Car Showroom</title>
+    <link rel="stylesheet" href="styles/showroom-nav.css">
     <style>
         * {
             margin: 0;
@@ -17,9 +18,10 @@
             overflow: hidden;
             color: white;
             position: relative;
+            background: #000;
         }
 
-        /* Video Background */
+        /* Video Background - More visible on mobile */
         #video-background {
             position: fixed;
             top: 0;
@@ -28,10 +30,10 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
-            filter: brightness(0.9);
+            filter: brightness(0.8);
         }
 
-        /* Dark overlay for better text readability */
+        /* Reduced overlay opacity for mobile */
         .overlay {
             position: fixed;
             top: 0;
@@ -40,11 +42,11 @@
             height: 100%;
             background: linear-gradient(
                 to bottom,
-                rgba(0, 0, 0, 0.7) 0%,
-                rgba(0, 0, 0, 0.4) 30%,
-                rgba(0, 0, 0, 0.3) 50%,
-                rgba(0, 0, 0, 0.4) 70%,
-                rgba(0, 0, 0, 0.7) 100%
+                rgba(0, 0, 0, 0.5) 0%,
+                rgba(0, 0, 0, 0.2) 30%,
+                rgba(0, 0, 0, 0.1) 50%,
+                rgba(0, 0, 0, 0.2) 70%,
+                rgba(0, 0, 0, 0.5) 100%
             );
             z-index: 0;
         }
@@ -56,59 +58,94 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            padding: 20px;
+            padding: 15px;
         }
 
-        /* Model selector */
+        /* Model selector - Hide by default, show on tap */
         .model-selector {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 15px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 15px 25px;
-            border-radius: 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(10px);
+            display: none;
+            flex-direction: column;
+            padding: 15px;
+            border-radius: 0 0 15px 15px;
             z-index: 1000;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .model-selector.active {
+            display: flex;
+            transform: translateY(0);
         }
 
         .model-btn {
             background: rgba(255, 255, 255, 0.1);
             border: none;
             color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
+            padding: 12px 15px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 500;
+            margin-bottom: 8px;
+            text-align: center;
         }
 
         .model-btn.active,
         .model-btn:hover {
             background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
         }
 
-        /* Posters container - hidden by default */
-        .posters-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60%;
-            height: 60%;
+        /* Model selector toggle button */
+        .model-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer;
+            z-index: 1001;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .model-toggle:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: scale(1.1);
+        }
+
+        /* Posters container - Simplified for mobile */
+        .posters-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             z-index: 10;
-            gap: 20px;
             opacity: 0;
             visibility: hidden;
             transition: all 0.5s ease;
             pointer-events: none;
+            padding: 20px;
         }
 
         .posters-container.active {
@@ -118,145 +155,151 @@
         }
 
         .poster {
-            width: 30%;
-            height: 80%;
+            width: 100%;
+            height: 30%;
             background-size: cover;
             background-position: center;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            margin-bottom: 15px;
             opacity: 0.9;
-            transition: transform 0.5s ease, opacity 0.5s ease;
-            filter: brightness(0.8);
+            transition: all 0.3s ease;
             cursor: pointer;
-            transform: translateY(20px);
-        }
-
-        .posters-container.active .poster {
-            transform: translateY(0);
-        }
-
-        .poster:hover {
-            opacity: 1;
-            transform: translateY(-5px) !important;
-            filter: brightness(1);
         }
 
         .poster.active {
-            border: 3px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            opacity: 1;
         }
 
-        /* Car info overlay */
+        /* Car info - Minimal, transparent */
         .car-info {
-            position: absolute;
-            bottom: 100px;
+            position: fixed;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
             z-index: 3;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 20px 40px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            min-width: 300px;
+            min-width: auto;
+            max-width: 80%;
         }
 
         .car-name {
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
-            letter-spacing: 2px;
-            margin-bottom: 10px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .car-tagline {
-            font-size: 1.1rem;
-            opacity: 0.8;
-            font-weight: 300;
-        }
-
-        /* Navigation controls */
+        /* Compact navigation - Hidden by default */
         .navigation {
-            position: absolute;
-            bottom: 30px;
+            position: fixed;
+            bottom: 15px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            width: 80%;
+            width: 95%;
             z-index: 3;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
         }
 
-        .nav-btn {
+        .navigation.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Main action button - Shows nav on tap */
+        .action-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
+            z-index: 4;
+            color: white;
+            font-size: 1.5rem;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+        .action-button:hover {
+            background: rgba(255, 255, 255, 0.25);
             transform: scale(1.1);
         }
 
-        .nav-btn i {
-            font-size: 1.8rem;
-            color: white;
-        }
-
+        /* Compact UI controls */
         .ui-controls {
             display: flex;
-            gap: 15px;
-            background: rgba(0, 0, 0, 0.5);
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
-            border-radius: 30px;
+            border-radius: 15px;
             padding: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            justify-content: space-between;
         }
 
         .ui-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
+            padding: 8px 15px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 0.9rem;
+            flex: 1;
+            text-align: center;
+            min-width: 0;
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .ui-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .ui-btn i {
-            font-size: 1.2rem;
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .color-selector {
-            display: flex;
-            gap: 15px;
-            background: rgba(255, 255, 255, 0.2);
+            display: none;
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border-radius: 30px;
-            padding: 10px 20px;
+            border-radius: 20px;
+            padding: 10px 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 5;
+        }
+
+        .color-selector.active {
+            display: flex;
         }
 
         .color-dot {
@@ -277,82 +320,84 @@
             box-shadow: 0 0 0 3px white;
         }
 
-        /* Video controls */
+        /* Video controls - Minimal */
         .video-controls {
-            position: absolute;
-            top: 30px;
-            right: 30px;
+            position: fixed;
+            top: 15px;
+            right: 15px;
             display: flex;
-            gap: 10px;
+            gap: 8px;
             z-index: 3;
         }
 
         .video-btn {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             transition: all 0.3s ease;
             color: white;
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
 
         .video-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.25);
             transform: scale(1.1);
         }
 
-        /* Specs panel */
+        /* Specs panel - Mobile optimized */
         .specs-panel {
             position: fixed;
             top: 0;
-            right: -400px;
-            width: 380px;
+            left: -100%;
+            width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(15px);
-            border-left: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 30px;
-            transition: right 0.5s ease;
+            padding: 20px;
+            transition: left 0.5s ease;
             z-index: 10;
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
         }
 
         .specs-panel.active {
-            right: 0;
+            left: 0;
         }
 
         .close-btn {
             position: absolute;
             top: 20px;
             right: 20px;
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 1.5rem;
         }
 
         .close-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
             transform: rotate(90deg);
         }
 
         .specs-title {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 1.5rem;
+            margin: 40px 0 20px 0;
             padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .specs-list {
@@ -364,19 +409,11 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             justify-content: space-between;
+            font-size: 0.95rem;
         }
 
         .spec-label {
             font-weight: 600;
-        }
-
-        /* Blur effect when posters are active */
-        .video-blur {
-            transition: filter 0.5s ease;
-        }
-
-        .video-blur.active {
-            filter: blur(5px) brightness(0.7);
         }
 
         /* Loading overlay */
@@ -406,6 +443,139 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        /* Desktop styles */
+        @media (min-width: 769px) {
+            .overlay {
+                background: linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, 0.7) 0%,
+                    rgba(0, 0, 0, 0.4) 30%,
+                    rgba(0, 0, 0, 0.3) 50%,
+                    rgba(0, 0, 0, 0.4) 70%,
+                    rgba(0, 0, 0, 0.7) 100%
+                );
+            }
+
+            .model-selector {
+                position: absolute;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                flex-direction: row;
+                width: auto;
+                background: rgba(0, 0, 0, 0.7);
+                transform: translateX(-50%) translateY(0) !important;
+                border-radius: 30px;
+            }
+
+            .model-toggle {
+                display: none;
+            }
+
+            .car-info {
+                position: absolute;
+                bottom: 100px;
+                top: auto;
+                background: rgba(0, 0, 0, 0.5);
+                padding: 20px 40px;
+                border-radius: 20px;
+            }
+
+            .car-name {
+                font-size: 2.5rem;
+            }
+
+            .navigation {
+                position: absolute;
+                bottom: 30px;
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .action-button {
+                display: none;
+            }
+
+            .ui-controls {
+                width: auto;
+            }
+
+            .color-selector {
+                position: static;
+                display: flex;
+                transform: none;
+            }
+
+            .specs-panel {
+                width: 380px;
+                left: -400px;
+            }
+
+            .specs-panel.active {
+                left: 0;
+            }
+
+            .posters-container {
+                flex-direction: row;
+                width: 60%;
+                height: 60%;
+                background: transparent;
+            }
+
+            .poster {
+                width: 30%;
+                height: 80%;
+                margin-bottom: 0;
+            }
+        }
+
+        /* Tablet styles */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .car-name {
+                font-size: 1.8rem;
+            }
+
+            .ui-btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+
+            .poster {
+                height: 40%;
+            }
+
+            .specs-panel {
+                padding: 30px;
+            }
+        }
+
+        /* Very small phones */
+        @media (max-width: 480px) {
+            .ui-btn {
+                font-size: 0.85rem;
+                padding: 6px 12px;
+            }
+
+            .action-button {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Touch-friendly hover states */
+        @media (hover: hover) {
+            .model-btn:hover,
+            .ui-btn:hover,
+            .video-btn:hover,
+            .color-dot:hover,
+            .close-btn:hover,
+            .action-button:hover {
+                transform: scale(1.1);
+            }
+        }
     </style>
 </head>
 <body>
@@ -422,8 +592,13 @@
         <div class="loader"></div>
     </div>
 
+    <!-- Model Toggle Button -->
+    <div class="model-toggle" id="model-toggle">
+        ≡
+    </div>
+
     <!-- Model Selector -->
-    <div class="model-selector">
+    <div class="model-selector" id="model-selector">
         <button class="model-btn active" data-model="porsche">PORSCHE 911</button>
         <button class="model-btn" data-model="rangerover">RANGE ROVER</button>
         <button class="model-btn" data-model="bmw">BMW M4</button>
@@ -447,20 +622,21 @@
         <button class="video-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
     </div>
 
+    <!-- Main Action Button -->
+    <div class="action-button" id="action-button">
+        ☰
+    </div>
+
     <!-- Navigation -->
-    <div class="navigation">
-        <div class="nav-btn" id="prev-btn">
-            <i>←</i>
-        </div>
-        
+    <div class="navigation" id="navigation">
         <div class="ui-controls">
             <button class="ui-btn" id="show-posters-btn">
-                Show Posters
+                Posters
             </button>
             <button class="ui-btn" id="show-specs-btn">
-                 Specifications
+                Specs
             </button>
-            <div class="color-selector">
+            <div class="color-selector" id="color-selector">
                 <div class="color-dot active" style="background-color: #2c3e50;" data-color="midnight-blue"></div>
                 <div class="color-dot" style="background-color: #c0392b;" data-color="crimson-red"></div>
                 <div class="color-dot" style="background-color: #f1c40f;" data-color="sunshine-yellow"></div>
@@ -468,35 +644,41 @@
                 <div class="color-dot" style="background-color: #7f8c8d;" data-color="silver-gray"></div>
             </div>
         </div>
-        
-        <div class="nav-btn" id="next-btn">
-            <i>→</i>
-        </div>
     </div>
 
     <!-- Specs Panel -->
     <div class="specs-panel" id="specs-panel">
         <div class="close-btn" id="close-specs">
-            <i>×</i>
+            ×
         </div>
         <h2 class="specs-title" id="specs-title">PORSCHE 911 Specifications</h2>
         <ul class="specs-list" id="specs-list">
             <!-- Dynamic specs will be inserted here -->
         </ul>
     </div>
-
+    <script src="scripts/showroom-nav.js"></script>
     <script>
-        // Model configurations with video paths
+        // Model configurations (same as before)
         const modelConfigs = {
             porsche: {
                 name: "PORSCHE 911",
                 tagline: "The Ultimate Driving Machine",
-                videoPath: '', // Update with your video path
-                posters: [
-                    'images/porsche/showroom1.jpg',
-                    'images/porsche/showroom2.jpg',
-                    'images/porsche/showroom3.jpg'
-                ],
+                videoPath: {
+                    large: 'Animation/large/porsche.mp4',
+                    small: 'Animation/small/porsche.mp4'
+                },
+                posters: {
+                    large: [
+                        'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                        'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                        'https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+                    ],
+                    small: [
+                        'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'
+                    ]
+                },
                 specs: {
                     engine: "Flat-6 Twin-Turbo",
                     horsepower: "443 HP",
@@ -513,12 +695,22 @@
             rangerover: {
                 name: "RANGE ROVER",
                 tagline: "Luxury Redefined",
-                videoPath: 'videos/rangerover_animation.mp4', // Update with your video path
-                posters: [
-                    'images/rangerover/showroom4.jpg',
-                    'images/rangerover/showroom5.jpg',
-                    'images/rangerover/showroom6.jpg'
-                ],
+                videoPath: {
+                    large: 'https://assets.mixkit.co/videos/preview/mixkit-car-driving-through-a-winding-road-in-a-forest-41533-large.mp4',
+                    small: 'https://assets.mixkit.co/videos/preview/mixkit-suv-driving-on-a-mountain-road-41309-large.mp4'
+                },
+                posters: {
+                    large: [
+                        'https://images.unsplash.com/photo-1566470467513-6fd71c66193d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                        'https://images.unsplash.com/photo-1566470467513-6fd71c66193d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                        'https://images.unsplash.com/photo-1566470467513-6fd71c66193d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+                    ],
+                    small: [
+                        'https://images.unsplash.com/photo-1566470467513-6fd71c66193d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1566470467513-6fd71c66193d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1566470467513-6fd71c66193d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'
+                    ]
+                },
                 specs: {
                     engine: "V8 Supercharged",
                     horsepower: "518 HP",
@@ -535,12 +727,22 @@
             bmw: {
                 name: "BMW M4",
                 tagline: "Precision Engineering",
-                videoPath: 'videos/bmw_animation.mp4', // Update with your video path
-                posters: [
-                    'images/bmw/showroom7.jpg',
-                    'images/bmw/showroom8.jpg',
-                    'images/bmw/showroom9.jpg'
-                ],
+                videoPath: {
+                    large: 'https://assets.mixkit.co/videos/preview/mixkit-road-with-traffic-at-night-3456-large.mp4',
+                    small: 'https://assets.mixkit.co/videos/preview/mixkit-white-sedan-driving-on-a-two-lane-road-41258-large.mp4'
+                },
+                posters: {
+                    large: [
+                        'https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                        'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                        'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+                    ],
+                    small: [
+                        'https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'
+                    ]
+                },
                 specs: {
                     engine: "Inline-6 Twin-Turbo",
                     horsepower: "473 HP",
@@ -557,12 +759,22 @@
             mercedes: {
                 name: "MERCEDES-BENZ",
                 tagline: "The Best or Nothing",
-                videoPath: 'videos/mercedes_animation.mp4', // Update with your video path
-                posters: [
-                    'images/mercedes/showroom10.jpg',
-                    'images/mercedes/showroom11.jpg',
-                    'images/mercedes/showroom12.jpg'
-                ],
+                videoPath: {
+                    large: 'https://assets.mixkit.co/videos/preview/mixkit-close-up-of-a-car-driving-on-a-wet-road-41527-large.mp4',
+                    small: 'https://assets.mixkit.co/videos/preview/mixkit-mercedes-benz-g-class-driving-through-mud-41273-large.mp4'
+                },
+                posters: {
+                    large: [
+                        'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                        'https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                        'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+                    ],
+                    small: [
+                        'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'
+                    ]
+                },
                 specs: {
                     engine: "V8 Biturbo",
                     horsepower: "469 HP",
@@ -583,16 +795,22 @@
         let currentModelKey = 'porsche';
         let isMuted = true;
         let isLoading = false;
+        let currentScreenSize = 'large';
+        let isMobile = window.innerWidth < 769;
+        let isNavVisible = false;
+        let isModelSelectorVisible = false;
 
         // DOM elements
         const videoBackground = document.getElementById('video-background');
         const carNameElement = document.getElementById('car-name');
-        const carTaglineElement = document.getElementById('car-tagline');
+        const modelToggle = document.getElementById('model-toggle');
+        const modelSelector = document.getElementById('model-selector');
+        const actionButton = document.getElementById('action-button');
+        const navigation = document.getElementById('navigation');
+        const colorSelector = document.getElementById('color-selector');
         const colorDots = document.querySelectorAll('.color-dot');
         const specsPanel = document.getElementById('specs-panel');
         const closeSpecsBtn = document.getElementById('close-specs');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
         const showPostersBtn = document.getElementById('show-posters-btn');
         const showSpecsBtn = document.getElementById('show-specs-btn');
         const modelButtons = document.querySelectorAll('.model-btn');
@@ -603,13 +821,15 @@
         const playBtn = document.getElementById('play-btn');
         const muteBtn = document.getElementById('mute-btn');
         const fullscreenBtn = document.getElementById('fullscreen-btn');
-        const videoBlur = document.querySelector('.video-blur');
 
         // Get model keys for navigation
         const modelKeys = Object.keys(modelConfigs);
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
+            // Detect screen size
+            detectScreenSize();
+            
             // Load initial model
             loadModel('porsche');
             
@@ -619,11 +839,70 @@
             // Set up event listeners
             setupEventListeners();
             
-            // Preload all videos
-            preloadVideos();
+            // Hide loading overlay
+            setTimeout(() => {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                }, 500);
+            }, 1000);
         });
 
+        function detectScreenSize() {
+            const width = window.innerWidth;
+            isMobile = width < 769;
+            currentScreenSize = width >= 769 ? 'large' : 'small';
+            
+            // Reset UI states on mobile
+            if (isMobile) {
+                hideNavigation();
+                hideModelSelector();
+            } else {
+                showNavigation();
+                showModelSelector();
+            }
+            
+            return currentScreenSize;
+        }
+
         function setupEventListeners() {
+            // Toggle model selector on mobile
+            modelToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (isModelSelectorVisible) {
+                    hideModelSelector();
+                } else {
+                    showModelSelector();
+                    hideNavigation();
+                }
+            });
+
+            // Toggle navigation on mobile
+            actionButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (isNavVisible) {
+                    hideNavigation();
+                } else {
+                    showNavigation();
+                    hideModelSelector();
+                }
+            });
+
+            // Close model selector when clicking outside (mobile)
+            document.addEventListener('click', function(e) {
+                if (isMobile && isModelSelectorVisible && 
+                    !modelSelector.contains(e.target) && 
+                    !modelToggle.contains(e.target)) {
+                    hideModelSelector();
+                }
+                
+                if (isMobile && isNavVisible &&
+                    !navigation.contains(e.target) &&
+                    !actionButton.contains(e.target)) {
+                    hideNavigation();
+                }
+            });
+
             // Model selector buttons
             modelButtons.forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -633,30 +912,12 @@
                     // Update active button
                     modelButtons.forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
+                    
+                    // Hide model selector on mobile after selection
+                    if (isMobile) {
+                        hideModelSelector();
+                    }
                 });
-            });
-
-            // Navigation buttons
-            prevBtn.addEventListener('click', function() {
-                const currentIndex = modelKeys.indexOf(currentModelKey);
-                const prevIndex = (currentIndex - 1 + modelKeys.length) % modelKeys.length;
-                const prevModelKey = modelKeys[prevIndex];
-                loadModel(prevModelKey);
-                
-                // Update active button
-                modelButtons.forEach(b => b.classList.remove('active'));
-                document.querySelector(`[data-model="${prevModelKey}"]`).classList.add('active');
-            });
-
-            nextBtn.addEventListener('click', function() {
-                const currentIndex = modelKeys.indexOf(currentModelKey);
-                const nextIndex = (currentIndex + 1) % modelKeys.length;
-                const nextModelKey = modelKeys[nextIndex];
-                loadModel(nextModelKey);
-                
-                // Update active button
-                modelButtons.forEach(b => b.classList.remove('active'));
-                document.querySelector(`[data-model="${nextModelKey}"]`).classList.add('active');
             });
 
             // Color selection
@@ -676,88 +937,138 @@
             // Show specs button
             showSpecsBtn.addEventListener('click', function() {
                 specsPanel.classList.add('active');
+                if (isMobile) hideNavigation();
             });
 
             // Show posters button
             showPostersBtn.addEventListener('click', function() {
                 postersContainer.classList.toggle('active');
-                videoBlur.classList.toggle('active');
-                
-                // Update button text
-                if (postersContainer.classList.contains('active')) {
-                    this.innerHTML = '<i>👁️</i> Hide Posters';
-                } else {
-                    this.innerHTML = '<i>📷</i> Show Posters';
-                }
+                if (isMobile) hideNavigation();
             });
 
             // Video controls
             playBtn.addEventListener('click', togglePlayPause);
             muteBtn.addEventListener('click', toggleMute);
             fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+            // Window resize
+            window.addEventListener('resize', function() {
+                detectScreenSize();
+            });
+
+            // Tap anywhere on screen to hide UI on mobile (except when interacting with UI)
+            document.addEventListener('click', function(e) {
+                if (isMobile && !e.target.closest('.model-selector') && 
+                    !e.target.closest('.navigation') && 
+                    !e.target.closest('.action-button') &&
+                    !e.target.closest('.model-toggle') &&
+                    !e.target.closest('.specs-panel') &&
+                    !e.target.closest('.posters-container') &&
+                    !e.target.closest('.video-controls')) {
+                    
+                    hideNavigation();
+                    hideModelSelector();
+                }
+            });
         }
 
-        function loadModel(modelKey) {
-            if (isLoading) return;
+        function showNavigation() {
+            if (isMobile) {
+                navigation.classList.add('active');
+                isNavVisible = true;
+            }
+        }
+
+        function hideNavigation() {
+            if (isMobile) {
+                navigation.classList.remove('active');
+                isNavVisible = false;
+            }
+        }
+
+        function showModelSelector() {
+            if (isMobile) {
+                modelSelector.classList.add('active');
+                isModelSelectorVisible = true;
+            }
+        }
+
+        function hideModelSelector() {
+            if (isMobile) {
+                modelSelector.classList.remove('active');
+                isModelSelectorVisible = false;
+            }
+        }
+
+        function loadModel(modelKey, forceReload = false) {
+            if (isLoading && !forceReload) return;
             
             const config = modelConfigs[modelKey];
-            if (!config) {
-                console.error('Model configuration not found:', modelKey);
-                return;
-            }
+            if (!config) return;
 
             currentModelKey = modelKey;
             isLoading = true;
             
-            // Show loading overlay
-            loadingOverlay.style.opacity = '1';
-            loadingOverlay.style.pointerEvents = 'all';
-
             // Update car info
             carNameElement.textContent = config.name;
-            carTaglineElement.textContent = config.tagline;
+            
+            // Get appropriate content for current screen size
+            const videoPath = config.videoPath[currentScreenSize];
+            const posterUrls = config.posters[currentScreenSize];
 
             // Update posters
-            updatePosters(config.posters);
+            updatePosters(posterUrls);
 
             // Update specs panel
             updateSpecsPanel(config);
 
             // Load video
-            videoBackground.src = config.videoPath;
-            videoBackground.load();
-
-            // Handle video events
+            videoBackground.src = videoPath;
+            
+            // Handle video loading
             videoBackground.onloadeddata = function() {
                 isLoading = false;
                 loadingOverlay.style.opacity = '0';
-                loadingOverlay.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                }, 500);
                 
-                // Play video
-                videoBackground.play().catch(e => {
-                    console.log('Autoplay prevented:', e);
+                // Try to play
+                videoBackground.play().then(() => {
+                    playBtn.innerHTML = '⏸';
+                    playBtn.title = "Pause";
+                }).catch(e => {
+                    playBtn.innerHTML = '▶';
+                    playBtn.title = "Play";
                 });
             };
 
             videoBackground.onerror = function() {
-                console.error('Error loading video:', config.videoPath);
                 isLoading = false;
                 loadingOverlay.style.opacity = '0';
-                loadingOverlay.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                }, 500);
                 
-                // Show error message
-                carTaglineElement.textContent = "Video not available - using default";
-                videoBackground.src = 'videos/default_animation.mp4'; // Add a default video
+                videoBackground.play().catch(e => {
+                    console.log('Play error:', e.message);
+                });
             };
 
-            console.log(`${config.name} video loaded`);
+            // Try to play immediately
+            videoBackground.play().then(() => {
+                playBtn.innerHTML = '⏸';
+                playBtn.title = "Pause";
+            }).catch(e => {
+                // Autoplay prevented
+            });
         }
 
-        function updatePosters(posters) {
+        function updatePosters(posterUrls) {
             const container = document.getElementById('posters-container');
             container.innerHTML = '';
             
-            posters.forEach((posterUrl, index) => {
+            posterUrls.forEach((posterUrl, index) => {
                 const poster = document.createElement('div');
                 poster.className = 'poster' + (index === 0 ? ' active' : '');
                 poster.style.backgroundImage = `url('${posterUrl}')`;
@@ -767,7 +1078,6 @@
         }
 
         function switchToPosterView(posterIndex) {
-            // Update active poster
             document.querySelectorAll('.poster').forEach((poster, index) => {
                 poster.classList.toggle('active', index === posterIndex);
             });
@@ -793,9 +1103,10 @@
 
         function togglePlayPause() {
             if (videoBackground.paused) {
-                videoBackground.play();
-                playBtn.innerHTML = '⏸';
-                playBtn.title = "Pause";
+                videoBackground.play().then(() => {
+                    playBtn.innerHTML = '⏸';
+                    playBtn.title = "Pause";
+                });
             } else {
                 videoBackground.pause();
                 playBtn.innerHTML = '▶';
@@ -819,7 +1130,7 @@
         function toggleFullscreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
-                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                    console.log(`Fullscreen error: ${err.message}`);
                 });
                 fullscreenBtn.innerHTML = '⛶';
                 fullscreenBtn.title = "Exit Fullscreen";
@@ -832,17 +1143,6 @@
             }
         }
 
-        function preloadVideos() {
-            // Preload all videos for smooth transitions
-            Object.values(modelConfigs).forEach(config => {
-                const video = document.createElement('video');
-                video.src = config.videoPath;
-                video.preload = 'auto';
-                video.style.display = 'none';
-                document.body.appendChild(video);
-            });
-        }
-
         // Handle fullscreen change
         document.addEventListener('fullscreenchange', function() {
             if (!document.fullscreenElement) {
@@ -851,17 +1151,28 @@
             }
         });
 
-        // Handle ESC key to hide posters
+        // Handle ESC key to hide UI
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 if (postersContainer.classList.contains('active')) {
                     postersContainer.classList.remove('active');
-                    videoBlur.classList.remove('active');
-                    showPostersBtn.innerHTML = '<i>📷</i> Show Posters';
                 }
                 if (specsPanel.classList.contains('active')) {
                     specsPanel.classList.remove('active');
                 }
+                if (isMobile) {
+                    hideNavigation();
+                    hideModelSelector();
+                }
+            }
+        });
+
+        // Handle visibility change
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden && !videoBackground.paused) {
+                videoBackground.pause();
+                playBtn.innerHTML = '▶';
+                playBtn.title = "Play";
             }
         });
     </script>

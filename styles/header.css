@@ -1,0 +1,247 @@
+/* header.css - Navigation Styles with Enhanced Theme Support */
+
+/* Header Styles */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Dark mode styles */
+body.dark-mode header,
+body.dark-theme header {
+    background: rgba(18, 18, 18, 0.95);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: #f0f0f0;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    z-index: 1001;
+}
+
+#logo-img {
+    height: 40px;
+    width: auto;
+    transition: all 0.3s ease;
+}
+
+.logo:hover #logo-img {
+    transform: scale(1.05);
+}
+
+/* Navigation Menu */
+.nav-menu ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2rem;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+body.dark-mode .nav-menu a,
+body.dark-theme .nav-menu a {
+    color: #f0f0f0;
+}
+
+.nav-menu a:hover {
+    color: #dfab3b;
+    background: rgba(255, 213, 0, 0.1);
+}
+
+body.dark-mode .nav-menu a:hover,
+body.dark-theme .nav-menu a:hover {
+    background: rgba(255, 179, 0, 0.2);
+}
+
+.nav-menu a.active {
+    color: #dfab3b;
+    font-weight: 600;
+}
+
+.nav-menu a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 3px;
+    background: #dfab3b;
+    border-radius: 2px;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    background: rgba(0, 123, 255, 0.1);
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #dfab3b;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.theme-toggle:hover {
+    background: rgba(0, 123, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.theme-toggle i {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .theme-toggle,
+body.dark-theme .theme-toggle {
+    background: rgba(255, 200, 0, 0.335);
+    color: #dfab3b;
+}
+
+body.dark-mode .theme-toggle:hover,
+body.dark-theme .theme-toggle:hover {
+    background: rgba(0, 123, 255, 0.3);
+}
+
+/* Mobile Menu */
+.mobile-menu {
+    display: none;
+    font-size: 1.5rem;
+    color: #333;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001;
+    transition: all 0.3s ease;
+}
+
+body.dark-mode .mobile-menu,
+body.dark-theme .mobile-menu {
+    color: #f0f0f0;
+}
+
+.mobile-menu.active {
+    color: #dfab3b;
+}
+
+.mobile-menu i {
+    transition: transform 0.3s ease;
+}
+
+.mobile-menu.active i {
+    transform: rotate(90deg);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-container {
+        padding: 1rem;
+    }
+    
+    .mobile-menu {
+        display: block;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: left 0.4s ease;
+        z-index: 999;
+    }
+    
+    body.dark-mode .nav-menu,
+    body.dark-theme .nav-menu {
+        background: rgba(18, 18, 18, 0.98);
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+    
+    .nav-menu ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        padding: 2rem;
+    }
+    
+    .nav-menu a {
+        font-size: 1.2rem;
+        padding: 1rem 2rem;
+        text-align: center;
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .nav-menu a.active::after {
+        bottom: 8px;
+        width: 40px;
+    }
+    
+    /* Ensure theme toggle is accessible on mobile */
+    .theme-toggle {
+        position: relative;
+        z-index: 1001;
+    }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+    #logo-img {
+        height: 32px;
+    }
+    
+    .theme-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+    
+    .nav-menu ul {
+        gap: 1.5rem;
+    }
+}
