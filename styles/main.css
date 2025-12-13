@@ -496,55 +496,66 @@ footer {
 /* Responsive Design */
 @media (max-width: 768px) {
     .header-container {
-        flex-direction: column;
-        text-align: center;
+        flex-direction: row !important; /* Keep horizontal on tablet */
+        padding: 10px 0;
     }
-
-    nav ul {
-        margin-top: 20px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    nav ul li {
-        margin: 5px 10px;
-    }
-
-    .hero h1 {
-        font-size: 2.5rem;
-    }
-
-    .mobile-menu {
-        display: block;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-    }
-
+    
     .nav-menu {
-        display: none;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: var(--header-bg);
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+    }
+    
+    .nav-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    nav ul li {
+        margin: 10px 0 !important;
         width: 100%;
         text-align: center;
     }
-
-    .nav-menu.active {
+    
+    nav ul li a {
         display: block;
+        padding: 12px !important;
+        width: 100%;
     }
-
-    .model-selector {
-        flex-direction: column;
+    
+    .mobile-menu {
+        display: block !important;
     }
-}
-/* Responsive Design */
-@media (max-width: 1024px) {
-.showroom-content {
-    flex-direction: column;
-}
-
-.model-viewer-container {
-    min-height: 400px;
-}
-}
+    
+    .hero {
+        margin-top: 60px;
+        height: 80vh; /* Reduce height on mobile */
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+        padding: 0 15px;
+    }
+    
+    .hero p {
+        padding: 0 15px;
+    }
+}}
 
 @media (max-width: 768px) {
 .header-container {
@@ -586,6 +597,130 @@ nav ul li {
 .action-buttons {
     flex-direction: column;
 }
+}
+
+@media (max-width: 400px) {
+    /* Fix hero section for small screens */
+    .hero h1 {
+        font-size: 2rem !important;
+        line-height: 1.2;
+    }
+    
+    .hero p {
+        font-size: 1rem !important;
+        padding: 0 10px;
+    }
+    
+    /* Fix logo size */
+    .logo img {
+        width: 120px !important;
+    }
+    
+    /* Fix button stacking */
+    .btn {
+        display: block;
+        margin: 10px 0;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .btn-secondary {
+        margin-left: 0;
+    }
+    
+    /* Fix section padding */
+    section {
+        padding: 40px 0 !important;
+    }
+    
+    .section-title h2 {
+        font-size: 1.8rem !important;
+    }
+    
+    /* Fix showroom for small screens */
+    .showroom-header h1 {
+        font-size: 2rem !important;
+    }
+    
+    .category-selector {
+        max-width: 100% !important;
+        flex-direction: column;
+    }
+    
+    .category-btn {
+        padding: 12px !important;
+        font-size: 1rem !important;
+    }
+    
+    .showroom-content {
+        flex-direction: column !important;
+        gap: 20px !important;
+    }
+    
+    .model-viewer-container {
+        min-height: 300px !important;
+    }
+    
+    .product-details {
+        padding: 20px !important;
+    }
+    
+    .product-title {
+        font-size: 1.5rem !important;
+    }
+    
+    .product-price {
+        font-size: 1.4rem !important;
+    }
+    
+    /* Fix navigation for small screens */
+    nav ul li {
+        margin-left: 10px !important;
+        margin-right: 10px !important;
+    }
+    
+    nav ul li a {
+        padding: 5px !important;
+        font-size: 0.9rem;
+    }
+    
+    /* Fix grids for small screens */
+    .cars-grid,
+    .fuels-grid,
+    .services-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+    
+    /* Fix model selector */
+    .model-selector {
+        flex-direction: column !important;
+    }
+    
+    .model-btn {
+        padding: 12px !important;
+    }
+    
+    /* Fix footer */
+    .footer-container {
+        grid-template-columns: 1fr !important;
+        text-align: center;
+    }
+    
+    .footer-col h3::after {
+        left: 50% !important;
+        transform: translateX(-50%);
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+    
+    /* Fix contact form */
+    .contact-container {
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
+    }
 }
 .showroom-page{
 min-height: 100vh;
